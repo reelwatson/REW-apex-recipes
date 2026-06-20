@@ -1,6 +1,6 @@
 /**
  * @description Demonstrates how to create Apex classes and methods that
- * can be invoked from Visual Flows and Process Builder Processes
+ * can be invoked from Flows
  * This also demonstrates custom input and output inner classes allowing
  * you to create code that accepts input from a flow/process and
  * returns data to the flow
@@ -10,8 +10,7 @@ public with sharing class InvocableMethodRecipes {
     /**
      * @description Internal custom exception class
      */
-    public class InvocableMethodRecipesException extends Exception {
-    }
+    public class InvocableMethodRecipesException extends Exception {}
 
     /**
      * @description inner class that represents an incoming search request
@@ -65,13 +64,8 @@ public with sharing class InvocableMethodRecipes {
      * System.debug(results.output);
      * ```
      */
-    @InvocableMethod(
-        label='Example Invocable Method'
-        description='Example Invocable Method'
-    )
-    public static List<ContactSearchResult> findRelatedContacts(
-        List<ContactSearchRequest> inputParams
-    ) {
+    @InvocableMethod(label='Example Invocable Method' description='Example Invocable Method')
+    public static List<ContactSearchResult> findRelatedContacts(List<ContactSearchRequest> inputParams) {
         // Map to hold all the bind variables used in the query
         Map<String, Object> contactQueryBinds = new Map<String, Object>();
         // Grab the first ContactSearchRequest from the list of inputParams
@@ -94,6 +88,7 @@ public with sharing class InvocableMethodRecipes {
                 contactQueryBinds.put('whoId', task.WhoId);
                 queryString = 'SELECT Id, Name FROM Contact WHERE Id = :whoId LIMIT 1';
             }
+            // REW note: you can make 'else' part of a switch statement?!
             when else {
                 throw new InvocableMethodRecipesException(
                     'Unknown object type passed. This method only supports Account and Task.'
