@@ -103,3 +103,5 @@ public with sharing class InvocableMethodRecipes {
         return results;
     }
 }
+
+// REW notes: okay, I understand how the query works, but the question is WHY. 
