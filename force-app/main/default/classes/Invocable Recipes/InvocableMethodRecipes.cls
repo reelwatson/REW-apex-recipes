@@ -16,11 +16,7 @@ public with sharing class InvocableMethodRecipes {
      * @description inner class that represents an incoming search request
      */
     public class ContactSearchRequest {
-        @InvocableVariable(
-            label='Generic SObject records - Input'
-            description='Input variable for generic SObjects'
-            required=true
-        )
+        @InvocableVariable(label='Generic SObject records - Input' description='Input variable for generic SObjects' required=true)
         public List<SObject> inputs;
     }
 
@@ -28,14 +24,10 @@ public with sharing class InvocableMethodRecipes {
      * @description Represents the output from the invocable method
      */
     public class ContactSearchResult {
-        @InvocableVariable(
-            label='Generic SObject record - Output'
-            description='Output variable for generic SObject'
-            required=true
-        )
+        @InvocableVariable(label='Generic SObject record - Output' description='Output variable for generic SObject' required=true)
         public SObject output;
         /**
-         * @description    Constructor building output object from SObject
+         * Constructor building output object from SObject
          * @param toOutput  Object to output
          */
         public ContactSearchResult(SObject toOutput) {
