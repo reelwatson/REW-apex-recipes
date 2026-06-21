@@ -16,11 +16,7 @@ public with sharing class InvocableMethodRecipes {
      * @description inner class that represents an incoming search request
      */
     public class ContactSearchRequest {
-        @InvocableVariable(
-            label='Generic SObject records - Input'
-            description='Input variable for generic SObjects'
-            required=true
-        )
+        @InvocableVariable(label='Generic SObject records - Input' description='Input variable for generic SObjects' required=true)
         public List<SObject> inputs;
     }
 
@@ -28,14 +24,10 @@ public with sharing class InvocableMethodRecipes {
      * @description Represents the output from the invocable method
      */
     public class ContactSearchResult {
-        @InvocableVariable(
-            label='Generic SObject record - Output'
-            description='Output variable for generic SObject'
-            required=true
-        )
+        @InvocableVariable(label='Generic SObject record - Output' description='Output variable for generic SObject' required=true)
         public SObject output;
         /**
-         * @description    Constructor building output object from SObject
+         * Constructor building output object from SObject
          * @param toOutput  Object to output
          */
         public ContactSearchResult(SObject toOutput) {
@@ -44,12 +36,17 @@ public with sharing class InvocableMethodRecipes {
     }
 
     /**
-     * @description Invocable method accepts a list of incoming
-     * ContactSearchRequest objects. The first incoming request is extracted,
+     * Invocable method accepts a list of incoming ContactSearchRequest objects. 
+     * The first incoming request is extracted,
      * and the incoming records' Id is used to determine the type of object.
-     * In this case, the code handles either an Account or a Task. A query is
-     * crafted specific to the incoming object, and it's type and the results
-     * of the query are converted to a Result object and returned.
+     * 
+     * In this case, the code handles either an Account or a Task. 
+     * 
+     * A query is crafted specific to the incoming object, 
+     * and it's type and the results of the query are converted to a Result object and returned.
+     * 
+     * REW note: but why????
+     * 
      * @param inputParams A list of ContactSearchRequest objects
      * @example
      * From Apex:
@@ -90,13 +87,10 @@ public with sharing class InvocableMethodRecipes {
             }
             // REW note: you can make 'else' part of a switch statement?!
             when else {
-                throw new InvocableMethodRecipesException(
-                    'Unknown object type passed. This method only supports Account and Task.'
-                );
+                throw new InvocableMethodRecipesException('Unknown object type passed. This method only supports Account and Task.');
             }
         }
-        // Note, both queries artificially limit the results to 1, but that's
-        // not a requirement
+        // Note, both queries artificially limit the results to 1, but that's not a requirement
         Contact contact = Database.queryWithBinds(
             queryString,
             contactQueryBinds,
@@ -109,3 +103,5 @@ public with sharing class InvocableMethodRecipes {
         return results;
     }
 }
+
+// REW notes: okay, I understand how the query works, but the question is WHY. 
