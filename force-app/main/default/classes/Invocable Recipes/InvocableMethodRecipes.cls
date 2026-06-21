@@ -45,6 +45,8 @@ public with sharing class InvocableMethodRecipes {
      * A query is crafted specific to the incoming object, 
      * and it's type and the results of the query are converted to a Result object and returned.
      * 
+     * REW note: but why????
+     * 
      * @param inputParams A list of ContactSearchRequest objects
      * @example
      * From Apex:
@@ -85,13 +87,10 @@ public with sharing class InvocableMethodRecipes {
             }
             // REW note: you can make 'else' part of a switch statement?!
             when else {
-                throw new InvocableMethodRecipesException(
-                    'Unknown object type passed. This method only supports Account and Task.'
-                );
+                throw new InvocableMethodRecipesException('Unknown object type passed. This method only supports Account and Task.');
             }
         }
-        // Note, both queries artificially limit the results to 1, but that's
-        // not a requirement
+        // Note, both queries artificially limit the results to 1, but that's not a requirement
         Contact contact = Database.queryWithBinds(
             queryString,
             contactQueryBinds,
