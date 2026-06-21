@@ -8,8 +8,8 @@ public with sharing class AtFutureRecipes {
      * pattern I routinely turn to, it is a valuable pattern for testing code
      * that is otherwise hard to test. For instance, `@future` methods must be
      * static void methods. This makes it hard to assert against return values.
-     * The idea behind this pattern is set a private static class variable to
-     * true, only when irreversible conditions or actions have occurred. The
+     * The idea behind this pattern is to set a private static class variable to
+     * true ONLY when irreversible conditions or actions have occurred. The
      * circuit breaker 'breaks', giving you something you can assert on. Again
      * this isn't a pattern I *often* turn to, but it can be valuable in certain
      * circumstances.
@@ -28,7 +28,7 @@ public with sharing class AtFutureRecipes {
      */
     @future
     public static void atFutureMethodWithoutCalloutPrivileges(String data) {
-        // this runs in the future!in a separate Apex transaction from the
+        // this runs in the future in a separate Apex transaction from the
         // calling code
         System.debug(LoggingLevel.INFO, '\n\nOur Data is: \n' + data);
         AtFutureRecipes.testCircuitBreaker = true;
@@ -54,12 +54,12 @@ public with sharing class AtFutureRecipes {
         // replaced with this RestClient call:
         // HttpResponse response = RestClient.makeApiCall('NamedCredentialName',
         //      RestClient.GET, '/');
-        Http h = new Http();
+        Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint('https://' + url);
         request.setMethod('GET');
 
-        HttpResponse response = h.send(request);
+        HttpResponse response = http.send(request);
         /**
          * This is the point in which you would interact with the response you
          * receive because this recipe is intended only to demonstrate making a
